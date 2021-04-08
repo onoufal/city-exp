@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Klondike Gold Rush - Seattle Unit National Historical Park",
+    "address": "319 Second Ave S., Seattle, WA 98104",
+    "fee": "0.00",
+    "description": "Seattle flourished during and after the Klondike Gold Rush. Merchants supplied people from around the world passing through this port city on their way to a remarkable adventure in Alaska. Today, the park is your gateway to learn about the Klondike Gold Rush, explore the area's public lands, and engage with the local community.",
+    "url": "https://www.nps.gov/klse/index.htm"
+  },
+  {
+    "name": "Mount Rainier National Park",
+    "address": "55210 238th Avenue East, Ashford, WA 98304",
+    "fee": "0.00",
+    "description": "Ascending to 14,410 feet above sea level, Mount Rainier stands as an icon in the Washington landscape. An active volcano, Mount Rainier is the most glaciated peak in the contiguous U.S.A., spawning five major rivers. Subalpine wildflower meadows ring the icy volcano while ancient forest cloaks Mount Rainier’s lower slopes. Wildlife abounds in the park’s ecosystems. A lifetime of discovery awaits.",
+    "url": "https://www.nps.gov/mora/index.htm"
+  }
+]
