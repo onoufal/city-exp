@@ -7,8 +7,6 @@ const cors = require('cors');
 const superagent = require('superagent');
 const pg = require('pg');
 
-
-
 const PORT = process.env.PORT || 3000;
 const DATABASE_URL = process.env.DATABASE_URL;
 const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
@@ -22,8 +20,6 @@ const client = new pg.Client(DATABASE_URL);
 const app = express();
 app.use(cors());
 
-
-
 app.get('/location', getLocation);
 app.get('/weather', getWeather);
 app.get('/parks', getParks);
@@ -36,16 +32,13 @@ client.connect().then(() => {
   app.listen(PORT, () => {
     console.log(`server is listening to port ${PORT}`);
   });
-
 });
-
 
 function getLocation(req, res) {
   const city = req.query.city;
   const findCitySQL = 'SELECT * FROM city WHERE search_query = $1;';
   const sqlArray = [city];
-  const url = `https://eu1.locationiq.com/v1/search.php?key=${GEOCODE_API_KEY}&q=${city}&format=json&limit=1`
-
+  const url = `https://eu1.locationiq.com/v1/search.php?key=${GEOCODE_API_KEY}&q=${city}&format=json&limit=1`;
   client.query(findCitySQL, sqlArray).then((dataFromDB) => {
     if (dataFromDB.rowCount === 0) {
       superagent.get(url).then(dataFromAPI => {
@@ -68,8 +61,6 @@ function InternalServerError(res) {
     res.status(500).send('Something went wrong');
   };
 }
-
-
 
 function getWeather(req, res) {
   const city = req.query.search_query;
