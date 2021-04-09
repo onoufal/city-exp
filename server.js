@@ -6,6 +6,7 @@ const express = require('express');
 const cors = require('cors');
 const superagent = require('superagent');
 const pg = require('pg');
+const { query } = require('express');
 
 const PORT = process.env.PORT || 3000;
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -39,15 +40,20 @@ function getLocation(req, res) {
   const findCitySQL = 'SELECT * FROM city WHERE search_query = $1;';
   const sqlArray = [city];
   const url = `https://eu1.locationiq.com/v1/search.php?key=${GEOCODE_API_KEY}&q=${city}&format=json&limit=1`;
+  const queryParams = { key: GEOCODE_API_KEY, format: 'json', q: city, limit: 1 }
   client.query(findCitySQL, sqlArray).then((dataFromDB) => {
     if (dataFromDB.rowCount === 0) {
-      superagent.get(url).then(dataFromAPI => {
-        // console.log(dataFromAPI.body);
+      superagent.get(url, queryParams).then(dataFromAPI => {
+        console.log('from API');
         const data = dataFromAPI.body[0];
         const location = new Location(city, data.display_name, data.lat, data.lon);
+        const insertCitySQL = 'INSERT INTO city (search_query , formatted_query, latitude, longitude) VALUES ($1 , $2 , $3, $4)'
+        client.query(insertCitySQL, [city, data.display_name, data.lat, data.lon]);
+
         res.send(location);
       });
     } else {
+      console.log('from Dabtbase');
       const data = dataFromDB.rows[0];
       const location = new Location(city, data.formatted_query, data.latitude, data.longitude);
       res.send(location);
